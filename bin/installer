@@ -1,0 +1,51 @@
+#!/bin/sh
+set -eux
+
+# Check environment
+
+fail() {
+    echo "$1" 1>&2
+    echo "Usage: $(basename "$0") [install|uninstall] (soffice|unoconv)*" 1>&2
+    exit 1
+}
+
+if [ "$#" -lt 1 ] ; then
+    fail "Invalid number of arguments."
+fi
+
+if [ "$(id --user)" -ne 0 ] ; then
+    fail "Impossible to prepare the system without root privileges."
+fi
+
+if [ "$(uname)" != "Linux" ] ; then
+    fail "Impossible to prepare another operating system than Linux."
+fi
+
+# Run installer
+
+case $1 in
+    install )
+        if echo "$*" | grep --quiet "soffice" ; then
+            curl --location --output /usr/local/bin/soffice "https://github.com/timonier/soffice/raw/master/bin/soffice"
+            chmod +x /usr/local/bin/soffice
+        fi
+
+        if echo "$*" | grep --quiet "unoconv" ; then
+            curl --location --output /usr/local/bin/unoconv "https://github.com/timonier/soffice/raw/master/bin/unoconv"
+            chmod +x /usr/local/bin/unoconv
+        fi
+    ;;
+
+    uninstall )
+        if echo "$*" | grep --quiet "soffice" ; then
+            rm --force /usr/local/bin/soffice
+        fi
+
+        if echo "$*" | grep --quiet "unoconv" ; then
+            rm --force /usr/local/bin/unoconv
+        fi
+    ;;
+
+    * )
+        fail "Argument \"$1\" is invalid."
+esac

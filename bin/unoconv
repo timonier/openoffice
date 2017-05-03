@@ -1,0 +1,20 @@
+#!/bin/sh
+
+docker run \
+    $(env | cut -d= -f1 | awk '{print "--env", $1}') \
+    --interactive="$([ -t 0 ] && echo "true" || echo "false")" \
+    --net host \
+    --privileged \
+    --rm \
+    --tty="$([ -t 0 ] && echo "true" || echo "false")" \
+    --volume /etc/fonts:/etc/fonts:ro \
+    --volume /etc/group:/etc/group:ro \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --volume /etc/passwd:/etc/passwd:ro \
+    --volume /etc/timezone:/etc/timezone:ro \
+    --volume /run:/run \
+    --volume /tmp:/tmp \
+    --volume "${HOME}:${HOME}" \
+    --volume "${PWD}:${PWD}" \
+    --workdir "${PWD}" \
+    "${IMAGE:-timonier/openoffice}:${TAG:-latest}" unoconv "$@"

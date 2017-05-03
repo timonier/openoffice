@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/opt/openoffice4/program/python /opt/unoconv/unoconv "$@"
