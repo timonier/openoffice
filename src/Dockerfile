@@ -8,7 +8,7 @@ ENV \
     OPENOFFICE_LANG=en-US \
     OPENOFFICE_VERSION=latest
 
-RUN set -eux \
+RUN set -ex \
 
     # Prepare system
 
@@ -27,9 +27,12 @@ RUN set -eux \
            libxt6 \
            locales \
 
-    # Install dumb-entrypoint
+    # Install dagwieers/unoconv
 
-    && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/bin/installer" | INSTALL_DIRECTORY="/usr/sbin" sh -s install \
+    && export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/unoconv/latest" | xargs) \
+
+    && curl --location "https://github.com/dagwieers/unoconv/archive/${UNOCONV_VERSION}.tar.gz" | tar --directory /tmp --extract --gzip \
+    && mv "/tmp/unoconv-${UNOCONV_VERSION}" /opt/unoconv \
 
     # Install openoffice
 
@@ -39,12 +42,11 @@ RUN set -eux \
     && dpkg --install /tmp/${OPENOFFICE_LANG}/DEBS/*.deb \
     && dpkg --install /tmp/${OPENOFFICE_LANG}/DEBS/desktop-integration/*.deb \
 
-    # Install unoconv
+    # Install timonier/dumb-entrypoint
 
-    && export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/unoconv/latest" | xargs) \
-
-    && curl --location "https://github.com/dagwieers/unoconv/archive/${UNOCONV_VERSION}.tar.gz" | tar --directory /tmp --extract --gzip \
-    && mv "/tmp/unoconv-${UNOCONV_VERSION}" /opt/unoconv \
+    && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-entrypoint/installer" | INSTALL_DIRECTORY="/usr/sbin" sh -s -- install \
+    && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-init/installer" | INSTALL_DIRECTORY="/usr/sbin" sh -s -- install \
+    && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/gosu/installer" | INSTALL_DIRECTORY="/usr/sbin" sh -s -- install \
 
     # Clean
 

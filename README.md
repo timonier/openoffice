@@ -17,7 +17,7 @@ sudo chmod +x /usr/local/bin/unoconv
 Linux users can use the [installer](https://github.com/timonier/soffice/blob/master/bin/installer):
 
 ```sh
-curl --location "https://github.com/timonier/soffice/raw/master/bin/installer" | sudo sh -s install
+curl --location "https://github.com/timonier/soffice/raw/master/bin/installer" | sudo sh -s -- install
 ```
 
 ## Usage
