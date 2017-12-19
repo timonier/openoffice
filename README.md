@@ -4,20 +4,10 @@ The free and Open Source productivity suite
 
 ## Installation
 
-Copy `bin/soffice` and `bin/unoconv` into your executable folder (like `/usr/local/bin` or `$HOME/bin`):
-
-```sh
-sudo curl --location --output /usr/local/bin/soffice "https://github.com/timonier/soffice/raw/master/bin/soffice"
-sudo chmod +x /usr/local/bin/soffice
-
-sudo curl --location --output /usr/local/bin/unoconv "https://github.com/timonier/soffice/raw/master/bin/unoconv"
-sudo chmod +x /usr/local/bin/unoconv
-```
-
 Linux users can use the [installer](https://github.com/timonier/soffice/blob/master/bin/installer):
 
 ```sh
-curl --location "https://github.com/timonier/soffice/raw/master/bin/installer" | sudo sh -s -- install
+curl --location "https://github.com/timonier/openoffice/raw/master/bin/installer" | sudo sh -s -- install
 ```
 
 ## Usage

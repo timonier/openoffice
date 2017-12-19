@@ -5,7 +5,7 @@ set -ex
 
 fail() {
     echo 1>&2 "$1"
-    echo 1>&2 "Usage: $(basename "$0") [install|uninstall] (soffice|unoconv)*"
+    echo 1>&2 "Usage: $(basename "$0") [install|uninstall]"
     exit 1
 }
 
@@ -25,25 +25,16 @@ fi
 
 case "$1" in
     install )
-        if echo "$*" | grep --quiet "soffice" ; then
-            curl --location --output /usr/local/bin/soffice "https://github.com/timonier/soffice/raw/master/bin/soffice"
-            chmod +x /usr/local/bin/soffice
-        fi
+        curl --location --output /usr/local/bin/soffice "https://github.com/timonier/openoffice/raw/master/bin/cmd"
+        chmod +x /usr/local/bin/soffice
 
-        if echo "$*" | grep --quiet "unoconv" ; then
-            curl --location --output /usr/local/bin/unoconv "https://github.com/timonier/soffice/raw/master/bin/unoconv"
-            chmod +x /usr/local/bin/unoconv
-        fi
+        curl --location --output /usr/local/bin/unoconv "https://github.com/timonier/openoffice/raw/master/bin/cmd"
+        chmod +x /usr/local/bin/unoconv
     ;;
 
     uninstall )
-        if echo "$*" | grep --quiet "soffice" ; then
-            rm --force /usr/local/bin/soffice
-        fi
-
-        if echo "$*" | grep --quiet "unoconv" ; then
-            rm --force /usr/local/bin/unoconv
-        fi
+        rm --force /usr/local/bin/soffice
+        rm --force /usr/local/bin/unoconv
     ;;
 
     * )
