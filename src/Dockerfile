@@ -41,7 +41,6 @@ RUN set -ex \
     # Install timonier/dumb-entrypoint
 \
     && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-entrypoint/installer" | INSTALL_DIRECTORY="/usr/sbin" sh -s -- install \
-    && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-init/installer" | INSTALL_DIRECTORY="/usr/sbin" sh -s -- install \
     && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/gosu/installer" | INSTALL_DIRECTORY="/usr/sbin" sh -s -- install \
 \
     # Clean
@@ -55,4 +54,4 @@ RUN set -ex \
 
 COPY ./rootfs /
 
-ENTRYPOINT [ "dumb-init" , "--" , "dumb-entrypoint" ]
+ENTRYPOINT [ "dumb-entrypoint" ]
