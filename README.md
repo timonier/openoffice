@@ -46,6 +46,8 @@ unoconv --format html --output /path/to/doc.html /path/to/doc.docx
 
 __Note__: Use the script `bin/build` to test your modifications locally.
 
+If you like / use this project, please let me known by adding a [★](https://help.github.com/articles/about-stars/) on the [GitHub repository](https://github.com/timonier/openoffice).
+
 ## Links
 
 * [dagwieers/unoconv](https://github.com/dagwieers/unoconv)
