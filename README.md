@@ -4,8 +4,6 @@ The free and Open Source productivity suite
 
 ## Installation
 
-Linux users can use the [installer](https://github.com/timonier/soffice/blob/master/bin/installer):
-
 ```sh
 # Define installation folder
 
