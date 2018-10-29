@@ -42,6 +42,6 @@ RUN set -e -u -x \
     && apt-get autoremove --purge --yes \
     && rm -f -r /tmp/* /var/lib/apt/lists/*
 
-COPY ./rootfs /
+COPY rootfs/. /
 
 ENTRYPOINT [ "dumb-entrypoint" ]
