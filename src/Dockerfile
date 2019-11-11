@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 LABEL \
-    maintainer="Morgan Auchede <morgan.auchede@gmail.com>"
+    maintainer="Morgan AUCHEDE <morgan.auchede@gmail.com>"
 
 ENV \
     NO_AT_BRIDGE=1
@@ -20,19 +20,19 @@ RUN set -e -u -x \
 \
     # Install dumb-entrypoint
 \
-    && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-entrypoint/installer" | bash -s -- install \
-    && curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/gosu/installer" | bash -s -- install \
+    && curl --location "https://gitlab.com/timonier/dumb-entrypoint/raw/master/src/dumb-entrypoint/installer" | bash -s -- install \
+    && curl --location "https://gitlab.com/timonier/dumb-entrypoint/raw/master/src/gosu/installer" | bash -s -- install \
 \
     # Install openoffice
 \
-    && export $(curl --location "https://github.com/timonier/version-lister/raw/generated/_/openoffice/latest" | xargs) \
+    && export $(curl --location "https://gitlab.com/timonier/version-lister/raw/generated/_/openoffice/latest" | xargs) \
     && curl --location "${OPENOFFICE_PACKAGE}" | tar --directory /tmp --extract --gzip \
     && dpkg --install /tmp/"${OPENOFFICE_LANG}"/DEBS/*.deb \
     && dpkg --install /tmp/"${OPENOFFICE_LANG}"/DEBS/desktop-integration/*.deb \
 \
     # Install unoconv
 \
-    && export $(curl --location "https://github.com/timonier/version-lister/raw/generated/dagwieers/unoconv/latest" | xargs) \
+    && export $(curl --location "https://gitlab.com/timonier/version-lister/raw/generated/dagwieers/unoconv/latest" | xargs) \
     && curl --location "${UNOCONV_SOURCE}" | tar --directory /tmp --extract --gzip \
     && mv /tmp/unoconv-"${UNOCONV_VERSION}" /opt/unoconv \
 \
