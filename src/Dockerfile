@@ -4,6 +4,7 @@ LABEL \
     maintainer="Morgan AUCHEDE <morgan.auchede@gmail.com>"
 
 ENV \
+    LC_ALL=C.UTF-8 \
     NO_AT_BRIDGE=1
 
 RUN set -e -u -x \
@@ -18,23 +19,16 @@ RUN set -e -u -x \
     && BUILD_DEPS="curl" \
     && apt-get install --no-install-recommends --yes ${BUILD_DEPS} ca-certificates default-jre libxt6 locales \
 \
-    # Install dumb-entrypoint
-\
-    && curl --location "https://gitlab.com/timonier/dumb-entrypoint/raw/master/src/dumb-entrypoint/installer" | bash -s -- install \
-    && curl --location "https://gitlab.com/timonier/dumb-entrypoint/raw/master/src/gosu/installer" | bash -s -- install \
-\
     # Install openoffice
 \
-    && export $(curl --location "https://gitlab.com/timonier/version-lister/raw/generated/_/openoffice/latest" | xargs) \
-    && curl --location "${OPENOFFICE_PACKAGE}" | tar --directory /tmp --extract --gzip \
-    && dpkg --install /tmp/"${OPENOFFICE_LANG}"/DEBS/*.deb \
-    && dpkg --install /tmp/"${OPENOFFICE_LANG}"/DEBS/desktop-integration/*.deb \
+    && curl --location "http://archive.apache.org/dist/openoffice/4.1.7/binaries/en-GB/Apache_OpenOffice_4.1.7_Linux_x86-64_install-deb_en-GB.tar.gz" | tar --directory /tmp --extract --gzip \
+    && dpkg --install /tmp/en-GB/DEBS/*.deb \
+    && dpkg --install /tmp/en-GB/DEBS/desktop-integration/*.deb \
 \
     # Install unoconv
 \
-    && export $(curl --location "https://gitlab.com/timonier/version-lister/raw/generated/dagwieers/unoconv/latest" | xargs) \
-    && curl --location "${UNOCONV_SOURCE}" | tar --directory /tmp --extract --gzip \
-    && mv /tmp/unoconv-"${UNOCONV_VERSION}" /opt/unoconv \
+    && curl --location "https://github.com/dagwieers/unoconv/archive/0.9.0.tar.gz" | tar --directory /tmp --extract --gzip \
+    && mv /tmp/unoconv-0.9.0 /opt/unoconv \
 \
     # Clean
 \
@@ -43,5 +37,3 @@ RUN set -e -u -x \
     && rm -f -r /tmp/* /var/lib/apt/lists/*
 
 COPY rootfs/ /
-
-ENTRYPOINT [ "dumb-entrypoint" ]
